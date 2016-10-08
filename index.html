@@ -1,8 +1,21 @@
 <html>
 	<head>
-		<script src="https://d3js.org/d3.v4.js"></script>
 		<title>Leeds Hack 2016</title>
 	</head>
 	<body>
+		<h1>Gwen Venn Diagram</h1>
+		<div id="venn"></div>
 	</body>
+
+	<script src="https://d3js.org/d3.v4.js"></script>
+	<script src="venn.js"></script>
+	<script>
+		var sets = [ 
+			{sets: ['People called Gwen'], size: 150},
+			{sets: ['People at LeedsHack'], size: 60},
+			{sets: ['People called Gwen', 'People at LeedsHack'], size: 1}
+		];
+		var chart = venn.VennDiagram();
+		d3.select("#venn").datum(sets).call(chart);
+	</script>
 <html>
