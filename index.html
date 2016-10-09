@@ -1,20 +1,47 @@
 <html>
 	<head>
-		<title>Leeds Hack 2016</title>
+		<title>Venn Diagram</title>
 	</head>
 	<body>
-		<h1>Gwen Venn Diagram</h1>
+		<h1 id="title">Venn Diagram</h1>
 		<div id="venn"></div>
 	</body>
 
 	<script src="https://d3js.org/d3.v4.js"></script>
 	<script src="venn.js"></script>
 	<script>
-		var sets = [ 
-			{sets: ['People called Gwen'], size: 150},
-			{sets: ['People at LeedsHack'], size: 60},
-			{sets: ['People called Gwen', 'People at LeedsHack'], size: 1}
-		];
+
+		function getQueryVariable(variable)
+		{
+			var query = window.location.search.substring(1);
+			var vars = query.split("&");
+			for (var i=0;i<vars.length;i++) {
+				var pair = vars[i].split("=");
+				if(pair[0] == variable) {
+					return decodeURIComponent(pair[1]);
+				}
+			}
+			return(false);
+		}
+
+		document.getElementById("title").innerHTML = getQueryVariable("title") ? getQueryVariable("title") : "Gwen Venn Diagram";
+		
+		if(getQueryVariable("label_a") && getQueryVariable("label_b") 
+			&& getQueryVariable("value_a") && getQueryVariable("value_b")
+			&& getQueryVariable("crossover")) {
+			var sets = [ 
+				{sets: [getQueryVariable("label_a")], size: getQueryVariable("value_a")},
+				{sets: [getQueryVariable("label_b")], size: getQueryVariable("value_b")},
+				{sets: [getQueryVariable("label_a"), getQueryVariable("label_b")], size: getQueryVariable("crossover")}
+			];
+		} else {
+			var sets = [ 
+				{sets: ["People called Gwen"], size: 100},
+				{sets: ["People at Leeds hack"], size: 35},
+				{sets: ["People called Gwen", "People at Leeds hack"], size: 1}
+			];
+		}
+		
 		var chart = venn.VennDiagram();
 		d3.select("#venn").datum(sets).call(chart);
 	</script>
