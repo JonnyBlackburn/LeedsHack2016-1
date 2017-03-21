@@ -1,3 +1,3 @@
 README
 
-This is a readme!
+Creates a simple venn diagram from the URL parameters passed in.
